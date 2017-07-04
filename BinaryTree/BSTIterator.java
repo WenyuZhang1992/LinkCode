@@ -25,11 +25,9 @@ public class BSTIterator {
 	}
 
 	public TreeNode next() {
-		if (temp != null) {
-			while (temp != null) {
-				stack.push(temp);
-				temp = temp.left;
-			}
+		while (temp != null) {
+			stack.push(temp);
+			temp = temp.left;
 		}
 		TreeNode next = stack.pop();
 		temp = next.right;
