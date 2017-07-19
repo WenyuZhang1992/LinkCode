@@ -18,35 +18,33 @@
 
 class FirstPositionOfTarget {
 
-    public int binarySearch(int[] nums, int target) {
-        
-        if (nums.length==0||nums==null){
+    public static int binarySearch(int[] nums, int target) {
+        if (nums == null || nums.length == 0)
             return -1;
-        }
-        
-        int length, start, end, middle;
-        length = nums.length;
-        start = 0;
-        end = length-1;
-        
-        while (start+1 < end){
-            middle = start + (end - start)/2;
-            if (target > nums[middle]){
-                start = middle;
-            }
-            else{
-                end = middle;
+
+        int start = 0;
+        int end = nums.length - 1;
+        int mid;
+
+        while (end - start > 1) {
+            mid = start + (end - start)/2;
+            if (nums[mid] >= target) {
+                end = mid;
+            } else {
+                start = mid;
             }
         }
-        if (nums[start]==target){
+
+        if (nums[start] == target)
             return start;
-        }
-        else if(nums[end]==target){
+        if (nums[end] == target)
             return end;
-        }
-        else{
-            return -1;
-        }
-        
+
+        return -1;
+    }
+
+    public static void main(String[] argv) {
+        int[] arr = {1, 2, 3, 3, 4, 5, 10};
+        System.out.println(binarySearch1(arr, 3));
     }
 }

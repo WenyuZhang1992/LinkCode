@@ -1,5 +1,6 @@
-class FindPeakElement {
-    /** Description:
+import java.util.*;
+
+/** Description:
       * There is an integer array which has the following features:
       * 1.The numbers in adjacent positions are different.
       * 2.A[0] < A[1] && A[A.length - 2] > A[A.length - 1].
@@ -7,53 +8,32 @@ class FindPeakElement {
       * A[P] > A[P-1] && A[P] > A[P+1]
       * Find a peak element in this array. Return the index of the peak.
      */
-    public int findPeak(int[] A) {
-        // write your code here
-        if (A.length<3 || A == null){
-        	return 0;
-        }
+class FindPeakElement {
+    /**
+     * Version 1: Use Binary Search, compare the mid with its adjacents
+     *      Time: O(logn)
+     *     Space: O(1)
+     */
+    public static int findPeak(int[] A) {
+        if (A == null || A.length <= 0)
+            return Integer.MIN_VALUE;
 
         int start = 0;
-        int end = A.length-1;
-        int middle;
+        int end = A.length - 1;
+        int mid;
 
-        // Solution 1:
-        while (start+1 < end){
-        	middle = start + (end-start)/2;
-        	if (A[middle+1]<A[middle] && A[middle]>A[middle-1]){
-        		return middle;
-        	}
-        	if (A[middle] <= A[end]||A[middle+1]>A[middle]){
-        		start = middle;
-        	}
-        	else if (A[middle] <= A[start]||A[middle-1]>A[middle]){
-        		end = middle;
-        	}
+        while (end - start > 2) {
+            mid = start + (end - start)/2;
+            if (A[mid] > A[mid - 1] && A[mid] > A[mid + 1])
+                return mid;
+
+            if (A[mid] < A[mid - 1]) {
+                end = mid;
+            } else {
+                start = mid;
+            }
         }
 
-        /* Solution 2:
-        while (start+1 < end){
-        	middle = start + (end-start)/2;
-        	if (A[middle+1]<A[middle] && A[middle]>A[middle-1]){
-        		return middle;
-        	}
-        	else if (A[middle+1]>A[middle] && A[middle]<A[middle-1]){
-        		start = middle;
-        	}
-        	else if (A[middle+1]>A[middle] && A[middle]>A[middle-1]){
-        		start = middle;
-        	}
-        	else{
-        		end = middle;
-        	}
-        }
-        */
-
-        if (A[start]>A[end]){
-        	return start;
-        }
-        else{
-        	return end;
-        }
+        return A[start + 1];
     }
 }
