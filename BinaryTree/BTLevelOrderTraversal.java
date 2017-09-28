@@ -14,28 +14,29 @@ public class BTLevelOrderTraversal {
      */
     public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
         ArrayList result = new ArrayList();
-        if (root == null)
+        if (root == null) {
             return result;
+        }
 
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root);
-        int size = queue.size();
-        while (size != 0) {
+
+        while (queue.size() != 0) {
+            int count = queue.size();
             ArrayList<Integer> level = new ArrayList<Integer>();
-            TreeNode temp;
-            for (int i=0; i<size; i++) {
-                temp = queue.poll();
+            while (count > 0) {
+                TreeNode temp = queue.poll();
                 level.add(temp.val);
-                if (temp.left != null)
+                if (temp.left != null) {
                     queue.offer(temp.left);
-                if (temp.right != null)
+                }
+                if (temp.right != null) {
                     queue.offer(temp.right);
+                }
+                count--;
             }
             result.add(level);
-            size = queue.size();
         }
-
-        return result;
     }
 
     /**
