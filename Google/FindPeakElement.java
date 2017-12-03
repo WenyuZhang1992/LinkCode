@@ -1,20 +1,19 @@
-import java.util.*;
-
-/** Description:
- *  There is an integer array which has the following features:
- *  1.The numbers in adjacent positions are different.
- *  2.A[0] < A[1] && A[A.length - 2] > A[A.length - 1].
- *  We define a position P is a peek if:
- *  A[P] > A[P-1] && A[P] > A[P+1]
- *  Find a peak element in this array. Return the index of the peak.
+/**
+ *	162. Find Peak Element
+ *	https://leetcode.com/problems/find-peak-element/description/
  */
 class FindPeakElement {
-    /**
-     * Version 1: Use Binary Search, compare the mid with its adjacents
-     *      Time: O(logn)
-     *     Space: O(1)
-     */
-    public int findPeakElement(int[] nums) {
+
+	/**
+	 * Version 1: Use Binary Search
+     *            Since adjacent elements are not equal, and nums[-1] = nums[n] = Integer.MIN_VALUE,
+     *            there must be a peek element;
+     *
+     *            Every in the mid position, move the pointers to the increasing side since can't be always increasing(bounds are minimum) 
+	 *      Time: O(logn)
+	 *     Space: O(1)
+	 */
+	public int findPeakElement(int[] nums) {
         if (nums == null || nums.length == 0) {
             return Integer.MIN_VALUE;
         }
