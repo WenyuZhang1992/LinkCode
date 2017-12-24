@@ -8,8 +8,8 @@ class InorderSuccessorInBST {
 
 	/**
 	 * Version 1: 
-	 *      Time: O(nlogn) -> O(logn) for minHeap operation, need to operate O(n) times
-	 *     Space: O(1)
+	 *      Time: O(n)
+	 *     Space: O(n)
 	 */
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         if (root == null || p == null) {
