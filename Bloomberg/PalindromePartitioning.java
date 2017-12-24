@@ -7,8 +7,8 @@ class PalindromePartitioning {
 	/**
 	 * Version 1: Use DFS and backtracking
 	 *			  Firstly use DP to obtain a palindrome matrix
-	 *      Time:
-	 *     Space:
+	 *      Time: O(2^n)
+	 *     Space: O(n^2)
 	 */
 	public List<List<String>> partition(String s) {
         List result = new ArrayList();
