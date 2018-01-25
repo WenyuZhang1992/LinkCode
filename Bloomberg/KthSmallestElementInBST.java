@@ -35,7 +35,37 @@ class KthSmallestElementInBST {
     }
 
     /**
-	 * Version 2: Add one field leftCnt to track the number of TreeNode on left subtree
+     * Version 2: Use iterative inorder traversal and return the kth smallest element
+     *      Time: O(k)
+     *     Space: O(h)
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        if (root == null) {
+            return Integer.MIN_VALUE;
+        }
+
+        Stack<TreeNode> stack = new Stack();
+        TreeNode temp = root;
+
+        int count = 0;
+        while (stack.size() != 0 || temp != null) {
+            while (temp != null) {
+                stack.push(temp);
+                temp = temp.left;
+            }
+            
+            temp = stack.pop();
+            if (++count == k) {
+                return temp.val;
+            }
+            temp = temp.right;
+        }
+
+        return Integer.MIN_VALUE;
+    }
+
+    /**
+	 * Version 3: Add one field leftCnt to track the number of TreeNode on left subtree
 	 *			  Simplify the problem to Binary Search
 	 *      Time: O(h) -> h is the hright of the tree
 	 *     Space: O(1)

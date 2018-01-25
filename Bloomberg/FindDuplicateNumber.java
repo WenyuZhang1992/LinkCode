@@ -20,7 +20,7 @@ class FindDuplicateNumber {
         while (start <= end) {
         	mid = start + (end - start) / 2;
 
-        	// Count number of elements smaller than mid
+        	// Count number of elements smaller than or equal to mid
         	int count = 0;
         	for (int num : nums) {
         		if (num <= mid) {

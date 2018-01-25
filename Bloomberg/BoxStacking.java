@@ -7,6 +7,9 @@ class BoxStacking {
 
 	/**
 	 * Version 1: Can't rotate: sort the boxes by length, find the largest height ending at current box
+	 *			  At every position, there're three situations to compare: 1. Only use current box's height;
+	 *																	   2. Not use current box's height;
+	 *																	   3. Use current box's height along with previous boxes;
 	 *      Time: O(n^2)
 	 *     Space: O(n)
 	 */
@@ -21,31 +24,32 @@ class BoxStacking {
 			this.height = h;
 		}
 	}
-	public int boxStacking(Box[] boxes) {
-		if (boxes == null || boxes.length == 0) {
-			return Integer.MIN_VALUE;
-		}
 
-		Arrays.sort(boxes, new Comparator<Box>() {
-			@Override
-			public int compare(Box b1, Box b2) {
-				return b1.length - b2.length;
-			}
-		});
+	public int boxStocking(List<Box> boxes) {
+        if (boxes == null || boxes.size() == 0) {
+            return 0;
+        }
 
-		int[] dp = new int[boxes.length];
-		dp[0] = boxes[0].height;
-		int result = Integer.MIN_VALUE;
+        Collections.sort(boxes, new Comparator<Box>() {
+            @Override
+            public int compare(Box b1, Box b2) {
+                return b1.length - b2.length;
+            }
+        });
 
-		for (int i = 1; i < boxes.length; i++) {
-			for (int j = 0; j < i; j++) {
-				if (boxes[i].width > boxes[j].width) {
-					dp[i] = Math.max(dp[i], dp[j] + boxes[i].depth);
-				}
-			}
-			result = Math.max(result, dp[i]);
-		}
+        int[] dp = new int[boxes.size()];
+        dp[0] = boxes.get(0).height;
+        for (int i = 1; i < dp.length; ++i) {
+        
+        	// Determine if only use current box's height or not use current box's height
+            dp[i] = Math.max(boxes.get(i).height, dp[i - 1]);
+            for (int j = i - 1; j >= 0; --j) {
+                if (boxes.get(i).width > boxes.get(j).width) {
+                    dp[i] = Math.max(dp[i], boxes.get(i).height + dp[j]);
+                }
+            }
+        }
 
-		return result;
-	}
+        return dp[dp.length - 1];
+    }
 }

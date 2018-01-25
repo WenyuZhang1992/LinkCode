@@ -35,40 +35,44 @@ class CountNegativeNumbers {
 	 *      Time: O(m * logn)
 	 *     Space: O(1)
 	 */
-	public int countNegative(int[][] nums) {
-		if (nums == null || nums.length == 0 || nums[0] == null || nums[0].length == 0) {
-			return Integer.MIN_VALUE;
-		}
+	public int countNegative1(int[][] nums) {
+        if (nums == null || nums.length == 0 || nums[0].length == 0) {
+            return 0;
+        }
 
-		int count = 0;
-		for (int i = 0; i < nums.length; i++) {
-			count += binarySearch(nums[i]);
-		}
+        int count = 0;
+        int rightBound = nums[0].length - 1;
 
-		return count;
-	}
+        for (int i = 0; i < nums.length; ++i) {
+            rightBound = binarySearch1(nums[i], rightBound);
+            count += (rightBound + 1);
+        }
 
-	private int binarySearch(int[] nums) {
-		int start = 0;
-		int mid;
-		int end = nums.length - 1;
+        return count;
+    }
 
-		while ((end - start) > 1) {
-			mid = start + (end - start) / 2;
-			if (nums[mid] < 0) {
-				start = mid;
-			} else {
-				end = mid;
-			}
-		}
+    // Return index of rightest negative element in row
+    private int binarySearch1(int[] nums, int bound) {
+        if (bound < 0) {
+            return -1;
+        }
+        int start = 0;
+        int end = bound;
+        int mid;
 
-		if (nums[end] < 0) {
-			return end + 1;
-		} else if (nums[start] < 0) {
-			return start + 1;
-		} else {
-			return 0;
-		}
-	}
+        while (start < (end - 1)) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] >= 0) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+
+        if (nums[end] < 0) { return end; }
+        if (nums[start] < 0) { return start; }
+
+        return -1;
+    }
 
 }
